@@ -14,44 +14,26 @@ def locations():
     return SearchdataLocations()
 
 
-@mock.patch('webscrapingapi.client.request')
-def test_locations(mock_request, client):
+@mock.patch('searchdata.SearchdataLocations.request')
+def test_locations(mock_request, locations):
     '''It should make a GET request with the locations api url and API key'''
-    googleSearch.execute("test", 10)
+    locations.execute("test", 10)
 
-    mock_request.assert_called_with(
-        'GET',
-        'https://locations.searchdata.io/'
-        '?api_key=API_KEY',
-        data=None,
-        headers={},
-    )
+    mock_request.assert_called_with({'q': 'test', 'limit': 10})
     
 
-@mock.patch('webscrapingapi.client.request')
-def test_get(mock_request, client):
+@mock.patch('searchdata.SearchdataGoogleSearch.request')
+def test_get(mock_request, googleSearch):
     '''It should make a GET request with the url and API key'''
     googleSearch.execute()
 
-    mock_request.assert_called_with(
-        'GET',
-        'https://api.searchdata.io/v1'
-        '?api_key=API_KEY',
-        data=None,
-        headers={},
-    )
+    mock_request.assert_called_with({})
 
 
-@mock.patch('webscrapingapi.client.request')
-def test_get_with_params(mock_request, client):
+@mock.patch('searchdata.SearchdataGoogleSearch.request')
+def test_get_with_params(mock_request, googleSearch):
     '''It should add parameters to the url'''
     googleSearch.set_q("test")
     googleSearch.execute()
 
-    mock_request.assert_called_with(
-        'GET',
-        'https://api.searchdata.io/v1'
-        '?q=test&api_key=API_KEY',
-        data=None,
-        headers={},
-    )
+    mock_request.assert_called_with({'q': 'test'})
