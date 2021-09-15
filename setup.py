@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='searchdata',
-    version="1.2.6",
+    version="1.0.0",
     url='https://github.com/SearchDataAPI/python-sdk',
     description='Searchdata Python SDK',
     long_description=open('README.md').read(),
